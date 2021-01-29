@@ -1,0 +1,36 @@
+<div class="au-o-grid__item  au-u-1-2 mx-auto">
+    <AuHeading>
+        Nieuwe verkeersbord
+    </AuHeading>
+    <form class="au-c-form" {{on "submit" this.createRecord}}>
+        <p>
+            <AuLabel for="input-block">Titel</AuLabel>
+            <AuInput id="input-block" @width="block" {{on "change" (pick "target.value" (set @model "title"))}} value={{@model.title}} />
+        </p>
+        <p>
+            <AuLabel for="input-block">Label</AuLabel>
+            <AuInput id="input-block" @width="block" {{on "change" (pick "target.value" (set @model "label"))}} value={{@model.label}}  />
+        </p>
+        <p>
+            <AuLabel for="textarea-regular">Opmerking</AuLabel>
+            <AuTextarea id="textarea-regular" @width="block" {{on "change" (pick "target.value" (set @model "comment"))}} value={{@model.comment}} ></AuTextarea>
+        </p>
+        <p>
+            <AuLabel for="textarea-regular">Gerelateerd met</AuLabel>
+             <PowerSelectMultiple
+                @options={{this.plates}}
+                @selected={{@model.conjunctions}}
+                @onChange={{this.updateConjunctions}}
+                as |plate|>
+        {{plate.title}}
+      </PowerSelectMultiple>
+        </p>
+        <input class="form-control" value={{this.file}} type="file" id="formFile" {{on "change" this.setFile }}
+                accept="image/png,image/jpeg" multiple="false">
+        <AuButton>
+            Bevestig
+        </AuButton>
+    </form>
+
+</div>
+{{outlet}}

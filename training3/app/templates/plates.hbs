@@ -1,0 +1,38 @@
+<div class="au-o-grid__item  au-u-1-2 mx-auto">
+    <AuDataTable @content={{this.model}} @fields="" @noDataMessage="Geen verkeersbord" @sort={{this.sort}} as |t|>
+  <t.menu as |menu|>
+    <menu.general>
+      <AuToolbar class="au-o-box">
+        <AuToolbarGroup>
+          <AuHeading @skin="2">
+            Verkeersborden
+          </AuHeading>
+        </AuToolbarGroup>
+        <AuToolbarGroup class="au-c-toolbar__group--center">
+          <AuDataTableTextSearch @filter={{this.title}} @placeholder="Zoek" />
+          <AuButton {{on "click" this.newPlate}}>
+            Nieuwe verkeersbord
+          </AuButton>
+        </AuToolbarGroup>
+      </AuToolbar>
+    </menu.general>
+  </t.menu>
+  <t.content as |c|>
+    <c.header>
+      <AuDataTableThSortable @field="title" @currentSorting={{this.sort}} @label="Titel" @class="data-table__header-title" />
+      <th  class="data-table__header-title">Action</th>
+
+    </c.header>
+    <c.body as |row|>
+      <td>{{row.title}}</td>
+      <td>
+      <LinkTo @route="view-plate" @model={{row}}>Toon Detail</LinkTo>
+      </td>
+
+    </c.body>
+  </t.content>
+</AuDataTable>
+  </div>
+
+
+{{outlet}}

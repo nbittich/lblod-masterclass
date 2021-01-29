@@ -1,0 +1,23 @@
+<div class="au-o-grid__item  au-u-1-2 mx-auto">
+    <AuHeading>
+            {{@model.title}}
+   </AuHeading>
+   <p>{{@model.label}}</p>
+        <hr>
+
+   {{#if @model.attachment.id}}
+        <AppImage @src={{@model.attachment.id}}/>
+        {{/if}}
+        <p></p>
+    {{@model.comment}}
+        <hr>
+      <AuHeading @skin="2">
+           Gerelateerd met
+   </AuHeading>
+    <ul>
+    {{#each @model.conjunctions as |pl| }}
+           <li><LinkTo @route="view-plate" @model={{pl}} >{{pl.title}}</LinkTo></li> 
+          {{/each}}
+    </ul>
+      
+</div>

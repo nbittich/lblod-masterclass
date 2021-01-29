@@ -1,0 +1,104 @@
+<h1>Organizations</h1>
+{{#if this.currentPage.length }}
+<div class="d-flex justify-content-between mb-2">
+    <div class="my-auto">
+        <i>Current Page: {{currentPageNumber }} /</i>
+        <i class="me-1">Total Elements: {{number-format this.currentPage.meta.count}}</i>
+    </div>
+    <div>
+        <button class="btn btn-primary" {{on 'click' this.prev}} disabled={{this.isFirstPage}}>Prev</button>&nbsp;
+        <button class="btn btn-primary " {{on 'click' this.next}} disabled={{this.isLastPage}}>Next</button>
+
+    </div>
+
+</div>
+{{/if}}
+<hr>
+<div class="table-responsive">
+    <div class="d-flex justify-content-between  mb-2">
+        <div class="input-group me-1">
+            <input type="search" class="form-control" placeholder="by vat" value={{this.searchByVat}} {{on 'input' (fn
+                this.updateSearchByVatNumber)}} aria-describedby="basic-addon1" aria-label="Filter By VAT N°">
+            <a class="input-group-text" id="basic-addon1" role="button" {{on 'click' this.runSearchByVatNumber}}>
+                <FaIcon @icon="search"></FaIcon>
+            </a>
+
+        </div>
+        <div class="input-group me-1">
+            <input type="search" class="form-control" placeholder="by name" value={{this.searchByName}} {{on 'input' (fn
+                this.updateSearchByName)}} aria-describedby="basic-addon2" aria-label="Filter By Name">
+            <a role="button" class="input-group-text" id="basic-addon2" {{on 'click' this.runSearchByName}}>
+                <FaIcon @icon="search"></FaIcon>
+            </a>
+        </div>
+        <div class="input-group">
+            <input type="search" class="form-control" placeholder="by zipcode" value={{this.searchByZipCode}}
+                {{on 'input' (fn this.updateSearchByZipCode)}} aria-describedby="basic-addon3"
+                aria-label="Filter By ZipCode">
+            <a role="button" class="input-group-text" id="basic-addon3" {{on 'click' this.runSearchByZipCode}}>
+                <FaIcon @icon="search"></FaIcon>
+            </a>
+        </div>
+    </div>
+
+
+
+    <table class="table table-sm table-bordered">
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th>
+                    <div class="d-flex justify-content-between">
+                        <span class="my-auto">VAT N°</span>
+                        <span class="my-auto">
+                            <a role="button" {{on 'click' this.toggleSort}} class="text-dark">
+                                {{#if this.sortDirection}}
+                                <FaIcon @icon="arrow-up" />
+                                {{else}}
+                                <FaIcon @icon="arrow-down" />
+                                {{/if}}
+
+                            </a>
+                        </span>
+
+                    </div>
+                </th>
+                <th>Name@fr</th>
+                <th>Name@nl</th>
+                <th>Start Date</th>
+                <th class="text-center">Detail</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#unless this.currentPage.length }}
+            <tr>
+                <td class="text-center" colspan="6">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </td>
+            </tr>
+            {{else}}
+            {{#each currentPage as |org index|}}
+            <tr>
+                <td class="text-center">{{row-number currentPage.meta.pagination index }}</td>
+                <td>{{org.enterprisenumber}}</td>
+                <td>{{org.denomination.nameFr.content}}</td>
+                <td>{{org.denomination.nameNl.content}}</td>
+
+                <td>{{org.startdate}}</td>
+                <td class="text-center">
+                    <LinkTo @route="organization" @model={{org}} class="btn btn-link">
+                        <FaIcon @icon="eye"></FaIcon>
+                    </LinkTo>
+                </td>
+            </tr>
+            {{/each}}
+
+
+            {{/unless}}
+
+        </tbody>
+    </table>
+</div>
